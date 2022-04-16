@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 import axios from "axios";
+import ReactAudioPlayer from "react-audio-player";
 
 const WordDefinitionsAPI = () => {
   const [word, setWord] = useState([]);
@@ -53,12 +54,18 @@ const WordDefinitionsAPI = () => {
       ) : (
         <div>
           {word.map((el) => {
+            console.log(el);
             return (
-              <div className="flex flex-col max-w-[1140px] mx-auto mt-6">
+              <div className="flex flex-col max-w-[1140px] mx-auto mt-4 md:mt-8">
                 <div className="flex flex-col md:flex-row justify-start md:justify-between items-center mb-4">
                   <span className="text-[#34495e] text-xl">
                     Word: {el.word.toUpperCase()}
                   </span>
+                  <ReactAudioPlayer
+                    src={el.phonetics[1].audio}
+                    autoPlay
+                    controls
+                  />
                   <span className="text-[#34495e] text-xl ml-4">
                     Phonetic: {el.phonetic}
                   </span>
@@ -72,15 +79,15 @@ const WordDefinitionsAPI = () => {
                           {meaning.partOfSpeech}
                         </span>
                       </span>
+                      <span className="text-[#1c1c1c] font-medium">
+                        Defintion:
+                      </span>
                       {meaning.definitions.map((definition) => {
                         return (
-                          <div className="mt-2">
-                            <span className="text-[#1c1c1c] font-medium">
-                              Definition:{" "}
-                              <span className="text-blue-900">
-                                {definition.definition}
-                              </span>
-                            </span>
+                          <div>
+                            <li className="text-blue-900">
+                              {definition.definition}
+                            </li>
                           </div>
                         );
                       })}
