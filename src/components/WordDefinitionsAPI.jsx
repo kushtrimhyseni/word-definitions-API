@@ -54,18 +54,19 @@ const WordDefinitionsAPI = () => {
       ) : (
         <div>
           {word.map((el) => {
-            console.log(el);
             return (
               <div className="flex flex-col max-w-[1140px] mx-auto mt-4 md:mt-8">
                 <div className="flex flex-col md:flex-row justify-start md:justify-between items-center mb-4">
                   <span className="text-[#34495e] text-xl">
                     Word: {el.word.toUpperCase()}
                   </span>
-                  <ReactAudioPlayer
-                    src={el.phonetics[1].audio}
-                    autoPlay
-                    controls
-                  />
+                  {el.phonetics[1]?.audio && (
+                    <ReactAudioPlayer
+                      src={el.phonetics[1]?.audio}
+                      autoPlay
+                      controls
+                    />
+                  )}
                   <span className="text-[#34495e] text-xl ml-4">
                     Phonetic: {el.phonetic}
                   </span>
