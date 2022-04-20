@@ -1,10 +1,13 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import axios from "axios";
 import ReactAudioPlayer from "react-audio-player";
 import Spinner from "./Spinner";
+import AlertContext from "./context/alert/AlertContext";
+import Alert from "./layouts/Alert";
 
 const WordDefinitionsAPI = () => {
+  const { setAlert } = useContext(AlertContext);
   const [word, setWord] = useState([]);
   const [error, setError] = useState("");
   const [inputField, setInputField] = useState("");
@@ -29,7 +32,7 @@ const WordDefinitionsAPI = () => {
   };
   const clickHandler = () => {
     if (inputField === "") {
-      alert("You must type something");
+      setAlert("You must type something", "error");
     } else {
       getDataFromInput(inputField);
       clearInput.current.value = "";
@@ -42,6 +45,7 @@ const WordDefinitionsAPI = () => {
   if (!loading) {
     return (
       <div className="flex flex-col pt-12">
+        <Alert />
         <div className="flex items-center justify-center ">
           <div className="flex border-2 border-mint-200 rounded">
             <input
